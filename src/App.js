@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -18,13 +17,9 @@ class App extends Component {
   }
 
   addEntry(entry){
-    console.log("ENTRY TITLE :" +entry.title);
-    console.log("ENTRY DESCRIPTION:" +entry.description);
 		//update state
 		const entries = this.state.content;
 		//add in new entry
-		//const timestamp = Date.now();
-		//entries[`entry-${timestamp}`] = entry;
     entries.push(entry);
     
     //set state
@@ -33,14 +28,10 @@ class App extends Component {
 	}
 
   submitForm(event) {  
-    console.log('submitted form');
-    console.log(`CONTENT TITLE: ${this.contentTitle.value}`);
-    console.log(`CONTENT DESCRIPTION ${this.contentDescription.value}`);
-
-    console.log("STATE:" + this.state.content);
     let entry = {
       "title" : this.contentTitle.value,
-      "description" : this.contentDescription.value
+      "description" : this.contentDescription.value,
+      "key":Date.now()
     }
    
     
@@ -51,6 +42,16 @@ class App extends Component {
 
 
   render() {
+
+    const entries = [];
+    this.state.content.forEach(function (entry) {
+      entries.push(
+        <li key={entry.key}>
+          <span className="navItemStyling">{entry.title}</span>
+        </li>
+      );
+    });
+
     return (
       <div className="App">
         <header className="App-header">Sample CMS</header>
@@ -65,16 +66,7 @@ class App extends Component {
           </div>
           <div className="g left">
             <ul className="navigationItems">
-              <li className="navItem">
-                <span className="navItemStyling">Post 1</span>
-              </li>
-              <li className="navItem">
-                <span className="navItemStyling">Post 2</span>
-              </li>
-              <li className="navItem">
-                <span className="navItemStyling">Post 3</span>
-              </li>
-
+              { entries }  
             </ul>
           </div>
           <div className="g right">
