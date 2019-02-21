@@ -8,7 +8,7 @@ class App extends Component {
     this.showContentDetail = this.showContentDetail.bind(this);
     this.clearForm = this.clearForm.bind(this);
     this.addEntry = this.addEntry.bind(this);
-    this.state = {content:[]}
+    this.state = {content:[], detail:{title:"", description:"", key:""}}
 
   }
 
@@ -49,6 +49,15 @@ class App extends Component {
       }
     });
     console.log(`SELECTED ITEM: ${entry.title}`);
+
+    const detail = this.state.detail;
+    detail.title = entry.title;
+    detail.description = entry.description;
+    detail.key = entry.key;
+
+		this.setState({detail});
+     console.log("STATE:" + this.state.content);
+
   }
  
 
@@ -82,10 +91,10 @@ class App extends Component {
             </ul>
           </div>
           <div className="g right">
-            <h2 className="contentHeading">Heading</h2>
+            <h2 className="contentHeading">{this.state.detail.title}</h2>
             <span className="postDate">02/12/2019</span>
             <span className="postAuthor">M. Propst</span>
-            <p className="postBody">The cow jumped over the moon. The cow jumped over the moon. The cow jumped over the moon. The cow jumped over the moon.</p>
+            <p className="postBody">{this.state.detail.description}</p>
           </div>  
         </div>
       </div>
