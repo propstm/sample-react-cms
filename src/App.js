@@ -8,6 +8,7 @@ class App extends Component {
     this.showContentDetail = this.showContentDetail.bind(this);
     this.clearForm = this.clearForm.bind(this);
     this.addEntry = this.addEntry.bind(this);
+    this.editDetail = this.editDetail.bind(this);
     this.state = {content:[], detail:{title:"", description:"", key:""}}
 
   }
@@ -15,20 +16,39 @@ class App extends Component {
   clearForm(){
     this.contentDescription.value = "";
     this.contentTitle.value = "";
+    this.editCheckbox.checked = false;
   }
 
   addEntry(entry){
 		//update state
 		const entries = this.state.content;
-		//add in new entry
-    entries.push(entry);
-    
-    //set state
-		this.setState({entries});
-     console.log("STATE:" + this.state.content);
+
+    if(this.editCheckbox.checked){
+      const detailKey = this.state.detail.key
+      entries.forEach(function (e){
+        if(e.key === detailKey){
+          console.log("update values");
+          e.title = entry.title;
+          e.description = entry.description;
+        }
+      });
+
+		  this.setState({entries});
+      console.log("ENTRY UPDATED:" + this.state.content);
+    }else{
+      console.log("ADD ENTRY TITLE: " + entry.title);
+      console.log("ADD ENTRY DESCRIPTION: " + entry.description);
+
+      entries.push(entry);
+
+		  this.setState({entries});
+      console.log("ENTRY ADDED:" + this.state.content);
+    }
+
 	}
 
   submitForm(event) {  
+    event.preventDefault();
     let entry = {
       "title" : this.contentTitle.value,
       "description" : this.contentDescription.value,
@@ -37,7 +57,13 @@ class App extends Component {
 
     this.addEntry(entry);
     this.clearForm();
-    event.preventDefault();
+  }
+
+  editDetail(){
+    this.contentTitle.value = this.state.detail.title;
+    this.contentDescription.value = this.state.detail.description;
+    this.editCheckbox.checked = true;
+
   }
 
   showContentDetail(key) {
@@ -82,6 +108,7 @@ class App extends Component {
               <label>Content Title:<input type="text" ref={(input) => this.contentTitle = input} name="name" /></label>
              <br/>
               <label>Content Description:<input type="text" ref={(input) => this.contentDescription = input} name="description" /></label>
+              <input type="checkbox" ref={(input) => this.editCheckbox = input}></input>
               <input type="submit" value="Submit" />
             </form>
           </div>
@@ -95,6 +122,7 @@ class App extends Component {
             <span className="postDate">02/12/2019</span>
             <span className="postAuthor">M. Propst</span>
             <p className="postBody">{this.state.detail.description}</p>
+            <button onClick={this.editDetail}>EDIT</button>
           </div>  
         </div>
       </div>
