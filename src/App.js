@@ -5,6 +5,7 @@ class App extends Component {
   constructor(){
     super();
     this.submitForm = this.submitForm.bind(this);
+    this.showContentDetail = this.showContentDetail.bind(this);
     this.clearForm = this.clearForm.bind(this);
     this.addEntry = this.addEntry.bind(this);
     this.state = {content:[]}
@@ -33,12 +34,23 @@ class App extends Component {
       "description" : this.contentDescription.value,
       "key":Date.now()
     }
-   
-    
+
     this.addEntry(entry);
     this.clearForm();
     event.preventDefault();
   }
+
+  showContentDetail(key) {
+
+    let entry = {}
+    this.state.content.forEach(function (e){
+      if(e.key === key){
+        entry = e;  
+      }
+    });
+    console.log(`SELECTED ITEM: ${entry.title}`);
+  }
+ 
 
 
   render() {
@@ -46,11 +58,11 @@ class App extends Component {
     const entries = [];
     this.state.content.forEach(function (entry) {
       entries.push(
-        <li key={entry.key}>
+        <li key={entry.key} onClick={() => this.showContentDetail(entry.key)}>
           <span className="navItemStyling">{entry.title}</span>
         </li>
       );
-    });
+    }.bind(this));
 
     return (
       <div className="App">
