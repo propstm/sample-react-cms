@@ -14,11 +14,6 @@ class App extends Component {
 
   }
 
-  clearForm(){
-    this.contentDescription.value = "";
-    this.contentTitle.value = "";
-    this.editCheckbox.checked = false;
-  }
 
   addEntry(entry, checkboxChecked){
     const entries = this.state.content;
@@ -46,18 +41,6 @@ class App extends Component {
     }
 
 	}
-
-  // submitForm(event) {  
-  //   event.preventDefault();
-  //   let entry = {
-  //     "title" : this.contentTitle.value,
-  //     "description" : this.contentDescription.value,
-  //     "key":Date.now()
-  //   }
-
-  //   this.addEntry(entry);
-  //   this.clearForm();
-  // }
 
   editDetail(){
     this.contentTitle.value = this.state.detail.title;
