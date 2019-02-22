@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
+import EntryForm from './EntryForm';
 
 class App extends Component {
   constructor(){
     super();
-    this.submitForm = this.submitForm.bind(this);
+    //this.submitForm = this.submitForm.bind(this);
     this.showContentDetail = this.showContentDetail.bind(this);
-    this.clearForm = this.clearForm.bind(this);
+    //this.clearForm = this.clearForm.bind(this);
     this.addEntry = this.addEntry.bind(this);
     this.editDetail = this.editDetail.bind(this);
     this.state = {content:[], detail:{title:"", description:"", key:""}}
@@ -19,16 +20,16 @@ class App extends Component {
     this.editCheckbox.checked = false;
   }
 
-  addEntry(entry){
+  addEntry(entry, checkboxChecked){
     const entries = this.state.content;
     const detailEntry = this.state.detail;
 
     //Use editCheckbox checked value to determine if we are editing or adding a new entry
-    if(this.editCheckbox.checked){
+    if(checkboxChecked){
       const detailKey = this.state.detail.key
       entries.forEach(function (e){
         if(e.key === detailKey){
-          //Checkbox is checked and we match by key, so update the following entry
+          //Checkbox is checked and we match by key, so update the following entry and detail node values
           console.log("update values");
           e.title = entry.title;
           e.description = entry.description;
@@ -46,17 +47,17 @@ class App extends Component {
 
 	}
 
-  submitForm(event) {  
-    event.preventDefault();
-    let entry = {
-      "title" : this.contentTitle.value,
-      "description" : this.contentDescription.value,
-      "key":Date.now()
-    }
+  // submitForm(event) {  
+  //   event.preventDefault();
+  //   let entry = {
+  //     "title" : this.contentTitle.value,
+  //     "description" : this.contentDescription.value,
+  //     "key":Date.now()
+  //   }
 
-    this.addEntry(entry);
-    this.clearForm();
-  }
+  //   this.addEntry(entry);
+  //   this.clearForm();
+  // }
 
   editDetail(){
     this.contentTitle.value = this.state.detail.title;
@@ -103,13 +104,7 @@ class App extends Component {
         <header className="App-header">Sample CMS</header>
         <div className="main">
           <div className="topForm">
-            <form action="" onSubmit={this.submitForm} className="contentForm">
-              <label>Content Title:<input type="text" ref={(input) => this.contentTitle = input} name="name" /></label>
-             <br/>
-              <label>Content Description:<input type="text" ref={(input) => this.contentDescription = input} name="description" /></label>
-              <input type="checkbox" ref={(input) => this.editCheckbox = input}></input>
-              <input type="submit" value="Submit" />
-            </form>
+            < EntryForm addEntry={this.addEntry} />
           </div>
           <div className="g left">
             <ul className="navigationItems">
@@ -121,7 +116,7 @@ class App extends Component {
             <span className="postDate">02/12/2019</span>
             <span className="postAuthor">M. Propst</span>
             <p className="postBody">{this.state.detail.description}</p>
-            <button onClick={this.editDetail}>EDIT</button>
+            {/* <button onClick={this.editDetail}>EDIT</button>  // Need to fix the edit functionality.  it broke when I made the form a component*/}
           </div>  
         </div>
       </div>
