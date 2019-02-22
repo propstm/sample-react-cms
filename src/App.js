@@ -20,29 +20,28 @@ class App extends Component {
   }
 
   addEntry(entry){
-		//update state
-		const entries = this.state.content;
+    const entries = this.state.content;
+    const detailEntry = this.state.detail;
 
+    //Use editCheckbox checked value to determine if we are editing or adding a new entry
     if(this.editCheckbox.checked){
       const detailKey = this.state.detail.key
       entries.forEach(function (e){
         if(e.key === detailKey){
+          //Checkbox is checked and we match by key, so update the following entry
           console.log("update values");
           e.title = entry.title;
           e.description = entry.description;
+          detailEntry.title = entry.title;
+          detailEntry.description = entry.description;
         }
       });
-
-		  this.setState({entries});
-      console.log("ENTRY UPDATED:" + this.state.content);
+      this.setState({entries});
+      
     }else{
-      console.log("ADD ENTRY TITLE: " + entry.title);
-      console.log("ADD ENTRY DESCRIPTION: " + entry.description);
-
+      //Add new entry to entries array
       entries.push(entry);
-
 		  this.setState({entries});
-      console.log("ENTRY ADDED:" + this.state.content);
     }
 
 	}
