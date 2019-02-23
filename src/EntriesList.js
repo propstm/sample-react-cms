@@ -8,7 +8,7 @@ const EntriesList = (props) => {
           <span className="navItemStyling">{entry.title}</span>
         </li>
       );
-    }.bind(this));
+    });
     
     return ( 
         <ul className="navigationItems">
