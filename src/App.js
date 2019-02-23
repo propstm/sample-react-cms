@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import EntryForm from './EntryForm';
+import EntriesList from './EntriesList';
+import ContentDetail from './ContentDetail';
 
 class App extends Component {
   constructor(){
@@ -42,6 +44,7 @@ class App extends Component {
 
 	}
 
+  //  Need to re-implment this, editing stopped working after abstracting to component classes.
   editDetail(){
     this.contentTitle.value = this.state.detail.title;
     this.contentDescription.value = this.state.detail.description;
@@ -72,34 +75,18 @@ class App extends Component {
 
 
   render() {
-
-    const entries = [];
-    this.state.content.forEach(function (entry) {
-      entries.push(
-        <li key={entry.key} onClick={() => this.showContentDetail(entry.key)}>
-          <span className="navItemStyling">{entry.title}</span>
-        </li>
-      );
-    }.bind(this));
-
     return (
       <div className="App">
         <header className="App-header">Sample CMS</header>
         <div className="main">
           <div className="topForm">
-            < EntryForm addEntry={this.addEntry} />
+            <EntryForm addEntry={this.addEntry} />
           </div>
           <div className="g left">
-            <ul className="navigationItems">
-              { entries }  
-            </ul>
+            <EntriesList content={this.state.content} showContentDetail={this.showContentDetail}/>
           </div>
           <div className="g right">
-            <h2 className="contentHeading">{this.state.detail.title}</h2>
-            <span className="postDate">02/12/2019</span>
-            <span className="postAuthor">M. Propst</span>
-            <p className="postBody">{this.state.detail.description}</p>
-            {/* <button onClick={this.editDetail}>EDIT</button>  // Need to fix the edit functionality.  it broke when I made the form a component*/}
+            <ContentDetail detail={this.state.detail}/>            
           </div>  
         </div>
       </div>
