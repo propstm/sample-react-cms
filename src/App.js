@@ -17,6 +17,8 @@ class App extends Component {
   }
 
 
+  // Is there a best practice or way to organize non-render functions in the app.js component?
+
   addEntry(entry, checkboxChecked){
     const entries = this.state.content;
     const detailEntry = this.state.detail;
